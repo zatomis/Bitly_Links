@@ -1,6 +1,8 @@
 import requests
 import json
 import os
+import sys
+import argparse
 from dotenv import load_dotenv, find_dotenv
 
 
@@ -37,10 +39,21 @@ def click_count(token, url):
   return json.loads(response.text)["total_clicks"]
 
 
-def main():
+def createParser ():
+    parser = argparse.ArgumentParser()
+    parser.add_argument ('-l', '--link')
+    return parser
+
+
+def main(link_convert):
   load_dotenv(find_dotenv())
   token_key = os.environ.get("BITLINK_TOKEN")
-  bitlink = input("Введите ссылку : ")
+
+  if (link_convert == "None"):
+    bitlink = input("Введите ссылку : ")
+  else:
+    bitlink = link_convert
+    
   try:
     if is_bitlink(token_key, bitlink):
         print("Кол-во переходов по ссылке : " +
@@ -58,4 +71,5 @@ def main():
 
 
 if __name__ == '__main__':
-  main()
+  parser = createParser()
+  main(str(parser.parse_args(sys.argv[1:]).link))
