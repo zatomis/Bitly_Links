@@ -8,7 +8,6 @@ def is_bitlink(token, url):
     bitly_url = f"https://api-ssl.bitly.com/v4/bitlinks/{url}"
     headers = {'Authorization': f'Bearer {token}'}
     response = requests.get(bitly_url, headers=headers)
-    response.raise_for_status()
     return response.ok
 
 
@@ -37,14 +36,14 @@ def createParser():
 
 if __name__ == '__main__':
     parser = createParser()
-    link_bitly = parser.parse_args().link
+    bitly_link = parser.parse_args().link
     load_dotenv(find_dotenv())
-    token = os.environ.get("BITLINK_TOKEN", "ERROR")
+    token = os.environ.get("BITLY_TOKEN", "ERROR")
     if token == "ERROR":
         print("Не указан токен Bitly")
     else:
-        if (str(link_bitly) != "None"):
-            bitlink = link_bitly
+        if (bitly_link):
+            bitlink = bitly_link
             try:
                 if is_bitlink(token, bitlink):
                     print(f"Кол-во переходов по ссылке : {click_count(token, bitlink)}")
