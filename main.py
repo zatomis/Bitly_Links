@@ -42,14 +42,12 @@ if __name__ == '__main__':
     if token == "ERROR":
         print("Не указан токен Bitly")
     else:
-        if (bitly_link):
-            bitlink = bitly_link
+        if bitly_link:
             try:
-                if is_bitlink(token, bitlink):
-                    print(f"Кол-во переходов по ссылке : {click_count(token, bitlink)}")
+                if is_bitlink(token, bitly_link):
+                    print(f"Кол-во переходов по ссылке : {click_count(token, bitly_link)}")
                 else:
-                    print(f"Короткая ссылка : {shorten_link(token, bitlink)}")
-
+                    print(f"Короткая ссылка : {shorten_link(token, bitly_link)}")
             except requests.exceptions.HTTPError:
                 print("Указана не верная ссылка")
         else:
